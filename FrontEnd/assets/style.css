@@ -125,6 +125,40 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/*Classe permettant de cacher les photos du portfolio*/
+
+.hidden {
+	display: none;
+}
+
+/*Style des boutons de filtre*/
+
+.filtre {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+}
+
+.filtre__bouton {
+	min-width: 100px;
+	margin-top: 25px;
+	margin-bottom: 50px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	background: none;
+	padding: 7.5px 10px;
+	color: #1D6154;
+	font-size: 16px;
+	font-family: 'Syne';
+}
+
+.filtre__bouton--selected {
+	background-color: #1D6154;
+	color: white;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
