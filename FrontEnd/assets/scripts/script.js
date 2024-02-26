@@ -14,7 +14,7 @@ fetch(workUrl)
     .then(data => {
         data.forEach(work => {
             const figure = document.createElement('figure')
-            figure.className = work.categoryId
+            figure.dataset.id = work.categoryId
             const photo = document.createElement('img')
             photo.src = work.imageUrl
             photo.alt = work.title
@@ -30,42 +30,61 @@ fetch(workUrl)
         console.log(error)
     })
 
-/*Affichage des travaux en fonction du filtre sélectionné*/
-
 /*Initialisation des différents boutons*/
 
-const filtreBouton = document.querySelectorAll('.filtre__bouton')
+const filtres = document.querySelector('.filtre')
 
-filtreBouton.forEach(bouton => {
-    bouton.addEventListener('click', function() {
-        filtreBouton.forEach(b => b.classList.remove('filtre__bouton--selected'))
-
-        bouton.classList.add('filtre__bouton--selected')
-
-        if (bouton.id === 'objets') {
-            selectionFiltre('1')
-        } else if (bouton.id === 'appartements') {
-            selectionFiltre('2')
-        } else if (bouton.id === 'hotels_restaurants') {
-            selectionFiltre('3')
-        } else if (bouton.id === 'tous') {
-            retirerFiltre()
-        }
-    })
+const boutonTous = document.createElement('button')
+boutonTous.innerHTML = 'Tous'
+boutonTous.className = 'filtre__bouton filtre__bouton--selected'
+boutonTous.addEventListener('click', function() {
+    retirerFiltre()
+    boutonSelected(boutonTous)
 })
+filtres.appendChild(boutonTous)
+
+const categoriesUrl = ('http://localhost:5678/api/categories')
+
+fetch(categoriesUrl)
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('erreur')
+        }
+        return res.json()
+    })
+
+    .then(data => {
+        data.forEach(categories => {
+            const bouton = document.createElement('button')
+            bouton.innerHTML = categories.name
+            bouton.id = categories.id
+            bouton.className = 'filtre__bouton'
+            bouton.addEventListener('click', function() {
+                selectionFiltre(categories.id)
+                boutonSelected(bouton)
+            })
+            filtres.appendChild(bouton)
+        })
+    })
+
+    .catch(error => {
+        console.log(error)
+    })
 
 /*Fonction permettant d'afficher/cacher les photos*/
 
 function selectionFiltre(n) {
     const sansFiltre = document.querySelectorAll('.gallery figure')
     sansFiltre.forEach(filtre => {
-        if (!filtre.classList.contains(n)) {
+        const filtreId = filtre.dataset.id;
+        if (filtreId != n) {
             filtre.classList.add('hidden')
         } else {
             filtre.classList.remove('hidden')
         }
     })
 }
+
 
 /*Fonction permettant d'afficher toutes les photos*/
 
@@ -74,4 +93,14 @@ function retirerFiltre () {
     pasDeFiltre.forEach(filtre => {
         filtre.classList.remove('hidden')
     })
+}
+
+/*Fonction permettant d'ajouter la classe "filtre__bouton--selected"*/
+
+function boutonSelected(bouton) {
+    const boutonActif = document.querySelector('.filtre__bouton--selected');
+    if (boutonActif) {
+        boutonActif.classList.remove('filtre__bouton--selected');
+    }
+    bouton.classList.add('filtre__bouton--selected');
 }
