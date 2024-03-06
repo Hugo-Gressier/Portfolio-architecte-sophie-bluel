@@ -32,17 +32,6 @@ fetch(workUrl)
 
 /*Initialisation des différents boutons*/
 
-const filtres = document.querySelector('.filtre')
-
-const boutonTous = document.createElement('button')
-boutonTous.innerHTML = 'Tous'
-boutonTous.className = 'filtre__bouton filtre__bouton--selected'
-boutonTous.addEventListener('click', function() {
-    retirerFiltre()
-    boutonSelected(boutonTous)
-})
-filtres.appendChild(boutonTous)
-
 const categoriesUrl = ('http://localhost:5678/api/categories')
 
 fetch(categoriesUrl)
@@ -54,6 +43,15 @@ fetch(categoriesUrl)
     })
 
     .then(data => {
+        const filtres = document.querySelector('.filtre')
+        const boutonTous = document.createElement('button')
+        boutonTous.innerHTML = 'Tous'
+        boutonTous.className = 'filtre__bouton filtre__bouton--selected'
+        boutonTous.addEventListener('click', function() {
+        retirerFiltre()
+        boutonSelected(boutonTous)
+    })
+    filtres.appendChild(boutonTous)
         data.forEach(categories => {
             const bouton = document.createElement('button')
             bouton.innerHTML = categories.name
