@@ -226,15 +226,20 @@ dropZone.addEventListener('drop', function(event) {
   dropZone.classList.remove('drag-over')
 
   const files = event.dataTransfer.files
-  handleFiles(files)
+  const imageInput = document.getElementById('image')
+  imageInput.files = files
+
+  handleFiles(imageInput)
 })
 
-function handleFiles(files) {
+function handleFiles(input) {
+  const files = input.files
+  const imagePreview = document.getElementById('image-preview')
+
   for (const file of files) {
     if (file.type.startsWith('image/')) {
       const reader = new FileReader()
       reader.onload = function(event) {
-        const imagePreview = document.getElementById('image-preview')
         imagePreview.style.backgroundImage = `url(${event.target.result})`
       }
       reader.readAsDataURL(file)
