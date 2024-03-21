@@ -16,7 +16,7 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
+    margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
@@ -75,7 +75,6 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
@@ -134,14 +133,14 @@ li:hover {
 
 /*Style des boutons de filtre*/
 
-.filtre {
+.filter {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	gap: 15px;
 }
 
-.filtre__bouton {
+.filter-button {
 	min-width: 100px;
 	margin-top: 25px;
 	margin-bottom: 50px;
@@ -154,7 +153,7 @@ li:hover {
 	font-family: 'Syne';
 }
 
-.filtre__bouton--selected {
+.filter-button-selected {
 	background-color: #1D6154;
 	color: white;
 }
@@ -169,19 +168,19 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
 
-/*Partie modale*/
-.titre_et_bouton_modale {
+.portfolio-title {
 	position: relative;
 }
 
-.titre_et_bouton_modale a {
+.portfolio-title a {
 	position: absolute;
 	top: 10px;
 	left: 60%;
 }
+
+/*Style de la modale*/
 
 .modal {
 	position: fixed;
@@ -204,19 +203,19 @@ li:hover {
 	font-size: 20px;
 }
 
-.js-modal-close {
+.modal-close {
 	position: absolute;
 	right: 25px;
 	top: 25px;
 }
 
-.js-modal-back {
+.modal-back {
 	position: absolute;
 	left: 25px;
 	top: 25px;
 }
 
-.modal__wrapper {
+.modal-wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -229,7 +228,7 @@ li:hover {
 	border-radius: 10px;
 }
 
-.modal__wrapper h2 {
+.modal-wrapper h2 {
 	margin-top: 50px;
 	color: black;
 	font-weight: 400;
@@ -237,7 +236,7 @@ li:hover {
 	font-family: 'Work Sans';
 }
 
-.modal__wrapper  .modale__bouton {
+.modal-wrapper  .modal-content-button {
 	margin-top: 30px;
 	margin-bottom: 30px;
 	padding: 10px 50px;
@@ -250,8 +249,8 @@ li:hover {
 	border-radius: 60px;
 }
 
-.contenu__modale {
-	border-bottom: 1px solid #B3B3B3;
+.modal-content {
+	border-bottom: 2px solid #B3B3B3;
 	padding-top: 50px;
 	padding-bottom: 50px;
 	position: relative;
@@ -264,12 +263,12 @@ li:hover {
 	position: relative;
 }
 
-.contenu__modale img {
+.modal-content img {
 	width: 80px;
 	padding-bottom: 15px;
 }
 
-.contenu__modale .bouton_supp {
+.modal-content .delete-button {
 	position: absolute;
 	background: black;
 	padding: 5px;
@@ -278,6 +277,74 @@ li:hover {
 	border-radius: 5px;
 	color: white;
 }
+
+/*Formulaire permettant l'ajout des travaux*/
+
+.portfolio-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.portfolio-form input[type="submit"]  {
+	padding: 10px 50px;
+	font-size: 14px;
+	height: 40px;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 35px;
+	border-bottom: 2px solid #B3B3B3;
+}
+
+.form-image {
+	position: relative;
+    height: 200px;
+	width: 450px;
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    background-color: #E8F1F6;
+    border-radius: 3px;
+}
+
+.form-image p {
+	font-size: 10px;
+	color: #444444;
+}
+
+.form-image i {
+	font-size: 75px;
+	color: #B9C5CC;
+}
+
+.form-image h3 {
+	background-color: #CBD6DC;
+	margin: 10px 0;
+	border-radius: 50px;
+	padding: 10px 35px;
+	color: #306685;
+	font-size: 14px;
+}
+
+#image-preview {
+	height: 100%;
+	width: 40%;
+	position: absolute;
+	background-size: cover;
+	background-position: center;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+  }
+
+  #image {
+	position: relative;
+	z-index: 2;
+  }
 
 #contact {
 	width: 50%;
@@ -290,20 +357,27 @@ li:hover {
 #contact h2, #login h2{
 	margin-bottom: 20px;
 }
-#contact form, #login form {
+#contact form, #login form, .portfolio-form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input, #login input {
+
+#contact input, #login input, .portfolio-form input, .portfolio-form select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label, #login label {
+
+.portfolio-form input, .portfolio-form select {
+	height: 50px;
+	width: 100%;
+}
+
+#contact label, #login label, .portfolio-form .label_form {
 	margin: 2em 0 1em 0;
 }
 #contact textarea, #login textarea {
@@ -349,6 +423,56 @@ footer nav ul {
 	margin-bottom: 250px;
 }
 
+/*Classes réutilisables*/
+
 .hidden {
 	display: none;
+}
+
+.input-invalid {
+	background-color: #A7A7A7 !important;
+}
+
+/*Style pour le mode édition*/
+
+.edit-margin {
+	margin-top: 75px;
+}
+
+.edit-mode {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	font-family: 'Work Sans';
+	overflow: visible;
+	width: 100%;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	background: black;
+	color: white;
+}
+
+/*Erreur du formulaire de la page login*/
+
+#login input.error-border {
+	border: 1px solid red;
+	background: rgba(255, 0, 0, 0.05);
+	height: 48px;
+}
+
+.error-login {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid red;
+	background: rgba(255, 0, 0, 0.05);
+	font-size: 15px;
+	font-family: 'Syne';
+	color: red;
+	height: 48px;
+	margin-top: 50px;
 }

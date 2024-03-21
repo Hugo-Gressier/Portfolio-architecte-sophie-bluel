@@ -1,7 +1,8 @@
-/*Récupération des travaux depuis le back-en*/
+// Récupération des travaux depuis le back-en
 
 const gallery = document.querySelector(".gallery")
-const workUrl = ('http://localhost:5678/api/works')
+const workUrl = 'http://localhost:5678/api/works'
+const modalContent = document.querySelector('.modal-content')
 
 fetch(workUrl)
     .then(res => {
@@ -10,29 +11,39 @@ fetch(workUrl)
         }
         return res.json()
     })
-
     .then(data => {
-        data.forEach(work => {
-            const figure = document.createElement('figure')
-            figure.dataset.id = work.categoryId
-            const photo = document.createElement('img')
-            photo.src = work.imageUrl
-            photo.alt = work.title
-            const figcaption = document.createElement('figcaption')
-            figcaption.innerHTML = work.title
-
-            figure.appendChild(photo)
-            figure.appendChild(figcaption)
-            gallery.appendChild(figure)
-        })
+        showMiniature(data)
+        showGallery(data)
     })
     .catch(error => {
         console.log(error)
     })
 
-/*Initialisation des différents boutons*/
+    function showGallery(works) {
+        while (gallery.firstChild) {
+          gallery.removeChild(gallery.firstChild)
+        }
+      
+        works.forEach(work => {
+          const figure = document.createElement('figure')
+          const img = document.createElement('img')
+          figure.dataset.id = work.categoryId
+          img.src = work.imageUrl
+          img.alt = work.title
+          const figcaption = document.createElement('figcaption')
+          figcaption.textContent = work.title
+      
+          figure.appendChild(img)
+          figure.appendChild(figcaption)
+          gallery.appendChild(figure)
+        })
+      
+        showMiniature(works)
+    }
 
-const categoriesUrl = ('http://localhost:5678/api/categories')
+// Initialisation des différents boutons
+
+const categoriesUrl = 'http://localhost:5678/api/categories'
 
 fetch(categoriesUrl)
     .then(res => {
@@ -43,25 +54,25 @@ fetch(categoriesUrl)
     })
 
     .then(data => {
-        const filtres = document.querySelector('.filtre')
-        const boutonTous = document.createElement('button')
-        boutonTous.innerHTML = 'Tous'
-        boutonTous.className = 'filtre__bouton filtre__bouton--selected'
-        boutonTous.addEventListener('click', function() {
-        retirerFiltre()
-        boutonSelected(boutonTous)
+        const filters = document.querySelector('.filter')
+        const buttonAll = document.createElement('button')
+        buttonAll.innerHTML = 'Tous'
+        buttonAll.className = 'filter-button filter-button-selected'
+        buttonAll.addEventListener('click', function() {
+        filterRemove()
+        buttonSelected(buttonAll)
     })
-    filtres.appendChild(boutonTous)
+    filters.appendChild(buttonAll)
         data.forEach(categories => {
-            const bouton = document.createElement('button')
-            bouton.innerHTML = categories.name
-            bouton.id = categories.id
-            bouton.className = 'filtre__bouton'
-            bouton.addEventListener('click', function() {
-                selectionFiltre(categories.id)
-                boutonSelected(bouton)
+            const buttonFilter = document.createElement('button')
+            buttonFilter.innerHTML = categories.name
+            buttonFilter.id = categories.id
+            buttonFilter.className = 'filter-button'
+            buttonFilter.addEventListener('click', function() {
+                filterSelection(categories.id)
+                buttonSelected(buttonFilter)
             })
-            filtres.appendChild(bouton)
+            filters.appendChild(buttonFilter)
         })
     })
 
@@ -69,36 +80,36 @@ fetch(categoriesUrl)
         console.log(error)
     })
 
-/*Fonction permettant d'afficher/cacher les photos*/
+// Fonction permettant d'afficher/cacher les photos
 
-function selectionFiltre(n) {
-    const sansFiltre = document.querySelectorAll('.gallery figure')
-    sansFiltre.forEach(filtre => {
-        const filtreId = filtre.dataset.id;
-        if (filtreId != n) {
-            filtre.classList.add('hidden')
+function filterSelection(n) {
+    const applyFilters = document.querySelectorAll('.gallery figure')
+    applyFilters.forEach(filter => {
+        const filterId = filter.dataset.id
+        if (filterId != n) {
+            filter.classList.add('hidden')
         } else {
-            filtre.classList.remove('hidden')
+            filter.classList.remove('hidden')
         }
     })
 }
 
 
-/*Fonction permettant d'afficher toutes les photos*/
+// Fonction permettant d'afficher toutes les photos
 
-function retirerFiltre () {
-    const pasDeFiltre = document.querySelectorAll('.gallery figure')
-    pasDeFiltre.forEach(filtre => {
-        filtre.classList.remove('hidden')
+function filterRemove () {
+    const noFilter = document.querySelectorAll('.gallery figure')
+    noFilter.forEach(filter => {
+        filter.classList.remove('hidden')
     })
 }
 
-/*Fonction permettant d'ajouter la classe "filtre__bouton--selected"*/
+// Fonction permettant d'ajouter la classe "filter-button-selected"
 
-function boutonSelected(bouton) {
-    const boutonActif = document.querySelector('.filtre__bouton--selected');
-    if (boutonActif) {
-        boutonActif.classList.remove('filtre__bouton--selected');
+function buttonSelected(buttonFilter) {
+    const buttonSelect = document.querySelector('.filter-button-selected')
+    if (buttonSelect) {
+        buttonSelect.classList.remove('filter-button-selected')
     }
-    bouton.classList.add('filtre__bouton--selected');
+    buttonFilter.classList.add('filter-button-selected')
 }
