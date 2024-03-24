@@ -194,6 +194,18 @@ imageInput.addEventListener('change', previewImage)
 
 function previewImage(event) {
   const file = event.target.files[0]
+
+  // Ajout de la vérification du fichier sélectionné via le click
+
+  const authorizedFiles = ['image/jpeg', 'image/png']
+
+  if (!authorizedFiles.includes(file.type)) {
+    alert("Le fichier sélectionné n'est pas une image")
+    imageInput.value = ''
+    submitButton.classList.add('input-invalid')
+    return
+  }
+
   const reader = new FileReader()
 
   reader.onload = function(event) {
@@ -236,7 +248,19 @@ function handleFiles(input) {
   const files = input.files
   const imagePreview = document.getElementById('image-preview')
 
+  // Ajout de la vérification du fichier sélectionné via le glisser-déposer
+
+  const authorizedFiles = ['image/jpeg', 'image/png']
+
   for (const file of files) {
+    
+    if (!authorizedFiles.includes(file.type)) {
+      alert("Le fichier sélectionné n'est pas une image")
+      imageInput.value = ''
+      submitButton.classList.add('input-invalid')
+      return
+    }
+
     if (file.type.startsWith('image/')) {
       const reader = new FileReader()
       reader.onload = function(event) {
